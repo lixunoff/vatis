@@ -73,19 +73,19 @@ export default function LicensesCertificates() {
   const licenses: License[] = [
     {
       id: 1,
-      image: "/images/doc-1.png",
+      image: "/images/doc-1.jpg",
       title: "Кваліфікаційний сертифікат виконавця робіт повʼязаних зі створенням обʼєктів архітектури",
       height: "340px"
     },
     {
       id: 2,
-      image: "/images/doc-2.png",
+      image: "/images/doc-2.jpg",
       title: "Ліцензія Державної архітектурно-будівельною інспекції України",
       height: "340px"
     },
     {
       id: 3,
-      image: "/images/doc-3.png",
+      image: "/images/doc-3.jpg",
       title: "Почесна грамота Вінницької обласної державної адміністрації та обласної Ради",
       height: "340px"
     }
