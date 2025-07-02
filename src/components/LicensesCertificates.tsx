@@ -130,9 +130,9 @@ export default function LicensesCertificates() {
             {licenses.map((license, index) => (
               <motion.div 
                 key={license.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
                 className="flex-1 w-full h-full p-4 sm:p-5 lg:p-6 bg-neutral-100 rounded-2xl sm:rounded-3xl flex flex-col justify-start items-start gap-3 transition-all duration-300 cursor-pointer"
                 onClick={() => openModal(license)}

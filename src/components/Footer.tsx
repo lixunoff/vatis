@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
     <footer className="w-full bg-white flex flex-col justify-start items-center gap-20 sm:gap-40">
       
       {/* SVG with Pipes and Bubbles */}
-      <div className="w-full flex justify-center items-center overflow-hidden">
+      <div className="w-full flex justify-center items-center overflow-visible">
         <motion.div 
           className="relative overflow-visible"
           style={{
