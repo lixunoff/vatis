@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import React from 'react'
 
 interface Project {
@@ -14,6 +14,8 @@ interface Project {
 const Objects: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState<boolean>(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   // Состояния для бульбашок в boiler.svg
   const [redPipeBubbles, setRedPipeBubbles] = useState<Array<{ id: number, x: number }>>([])
@@ -59,10 +61,36 @@ const Objects: React.FC = () => {
 
   useEffect(() => {
     // Инициализируем бульбашки для boiler.svg 
-    // Позиции основаны на анализе SVG (червона труба справа, синя ліворуч)
-    createBoilerBubbleSystem(setRedPipeBubbles, 355, 4000)   // Червона труба (зміщуємо на 3px вправо: 352 + 3)
-    createBoilerBubbleSystem(setBluePipeBubbles, 43, 3500)   // Синя труба (зміщуємо на 5px вліво: 48 - 5)
+    createBoilerBubbleSystem(setRedPipeBubbles, 355, 4000)   // Червона труба
+    createBoilerBubbleSystem(setBluePipeBubbles, 43, 3500)   // Синя труба
   }, [])
+
+  // Навигация
+  const totalSlides = 11 // 10 проектов + 1 boiler
+  
+  const scrollToSlide = (slideIndex: number) => {
+    if (scrollRef.current) {
+      const slideWidth = isMobile ? window.innerWidth * 0.75 + 16 : 416 // 400px + 16px gap
+      const scrollPosition = slideIndex * slideWidth
+      scrollRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      })
+      setCurrentSlide(slideIndex)
+    }
+  }
+
+  const nextSlide = () => {
+    if (currentSlide < totalSlides - 1) {
+      scrollToSlide(currentSlide + 1)
+    }
+  }
+
+  const prevSlide = () => {
+    if (currentSlide > 0) {
+      scrollToSlide(currentSlide - 1)
+    }
+  }
 
   const projects: Project[] = [
     {
@@ -155,6 +183,7 @@ const Objects: React.FC = () => {
 
         {/* Horizontal Scroll Carousel */}
         <div 
+          ref={scrollRef}
           className="w-full overflow-x-auto overflow-y-hidden"
           style={{ 
             scrollbarWidth: 'none',
@@ -168,6 +197,7 @@ const Objects: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
           >
+            {/* Первые 2 проекта */}
             {projects.slice(0, 2).map((project, index) => (
               <motion.div
                 key={project.id}
@@ -203,10 +233,6 @@ const Objects: React.FC = () => {
                   <div className="flex flex-col justify-start items-start gap-3 sm:gap-4">
                     <motion.h3 
                       className="text-white text-base sm:text-lg lg:text-2xl font-bold font-['Inter'] leading-tight sm:leading-[24px] lg:leading-[30px]"
-                      animate={{ 
-                        opacity: hoveredIndex === index ? 1 : 1 
-                      }}
-                      transition={{ duration: 0.3 }}
                     >
                       {project.title}
                     </motion.h3>
@@ -231,18 +257,20 @@ const Objects: React.FC = () => {
               </motion.div>
             ))}
 
-            {/* Спеціальний контейнер для boiler без hover ефектів */}
-            <div className="w-full flex justify-center items-center overflow-visible" style={{ width: '400px', height: isMobile ? '480px' : '600px', minWidth: '400px' }}>
+            {/* Boiler SVG */}
+            <div 
+              className="flex-shrink-0 flex justify-center items-center" 
+              style={{ 
+                width: isMobile ? '75vw' : '400px', 
+                height: isMobile ? '480px' : '600px', 
+                minWidth: isMobile ? '75vw' : '400px' 
+              }}
+            >
               <motion.div
-                key="boiler-carousel-container"
-                className="relative flex-shrink-0"
+                className="relative"
                 style={{
                   width: '400px',
                   height: '600px',
-                  minWidth: '400px',
-                  minHeight: '600px',
-                  maxWidth: '400px',
-                  maxHeight: '600px',
                   overflow: 'visible'
                 }}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -250,11 +278,10 @@ const Objects: React.FC = () => {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                {/* SVG з boiler */}
                 <img 
                   src="/images/boiler.svg" 
                   alt="Boiler system illustration" 
-                  className="absolute top-0 left-0 w-full h-full object-contain z-10 visible"
+                  className="absolute top-0 left-0 w-full h-full object-contain z-10"
                 />
 
                 {/* Бульбашки для червоної труби */}
@@ -301,7 +328,7 @@ const Objects: React.FC = () => {
               </motion.div>
             </div>
 
-            {/* Решта проєктів */}
+            {/* Остальные проекты */}
             {projects.slice(2).map((project, index) => (
               <motion.div
                 key={project.id}
@@ -337,10 +364,6 @@ const Objects: React.FC = () => {
                   <div className="flex flex-col justify-start items-start gap-3 sm:gap-4">
                     <motion.h3 
                       className="text-white text-base sm:text-lg lg:text-2xl font-bold font-['Inter'] leading-tight sm:leading-[24px] lg:leading-[30px]"
-                      animate={{ 
-                        opacity: hoveredIndex === (index + 2) ? 1 : 1 
-                      }}
-                      transition={{ duration: 0.3 }}
                     >
                       {project.title}
                     </motion.h3>
@@ -366,11 +389,60 @@ const Objects: React.FC = () => {
             ))}
             
             {/* Padding spacer */}
-            <div 
-              className="flex-shrink-0" 
-              style={{ width: '16px', height: '1px' }}
-            />
+            <div className="flex-shrink-0" style={{ width: '16px', height: '1px' }} />
           </motion.div>
+        </div>
+
+        {/* Navigation - только на десктопах */}
+        <div className="hidden lg:flex justify-center w-full">
+          <div className="bg-white rounded-3xl shadow-[0px_4px_4px_-4px_rgba(12,12,13,0.05),0px_16px_32px_-4px_rgba(12,12,13,0.10)] inline-flex justify-start items-center gap-2">
+            {/* Left Arrow */}
+            <button 
+              onClick={prevSlide}
+              disabled={currentSlide === 0}
+              className={`w-12 h-12 relative transition-opacity ${
+                currentSlide === 0 
+                  ? 'opacity-20 cursor-not-allowed' 
+                  : 'opacity-75 hover:opacity-100 cursor-pointer'
+              }`}
+            >
+              <div className="w-6 h-6 left-3 top-3 absolute overflow-hidden">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="w-full h-full">
+                  <path d="M15 18L9 12L15 6" stroke={currentSlide === 0 ? "black" : "#183AE4"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </button>
+
+            {/* Dots - показываем все 11 (10 проектов + boiler) */}
+            <div className="flex justify-start items-center gap-3">
+              {Array.from({ length: totalSlides }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => scrollToSlide(index)}
+                  className={`w-2 h-2 rounded-full transition-opacity ${
+                    currentSlide === index ? 'bg-black' : 'opacity-20 bg-black hover:opacity-50'
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Right Arrow */}
+            <button 
+              onClick={nextSlide}
+              disabled={currentSlide === totalSlides - 1}
+              className={`w-12 h-12 relative transition-opacity rotate-180 ${
+                currentSlide === totalSlides - 1 
+                  ? 'opacity-20 cursor-not-allowed' 
+                  : 'opacity-75 hover:opacity-100 cursor-pointer'
+              }`}
+            >
+              <div className="w-6 h-6 left-3 top-3 absolute overflow-hidden">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="w-full h-full">
+                  <path d="M15 18L9 12L15 6" stroke={currentSlide === totalSlides - 1 ? "black" : "#183AE4"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -388,12 +460,10 @@ const Objects: React.FC = () => {
           pointer-events: none;
         }
         
-        /* Бульбашки для червоної труби в boiler (зверху вниз) */
         .red-pipe-down-boiler {
           animation: move-down-boiler-red 4s ease-in forwards;
         }
         
-        /* Бульбашки для синьої труби в boiler (зверху вниз) */
         .blue-pipe-down-boiler {
           animation: move-down-boiler-blue 3.5s ease-in forwards;
         }

@@ -75,7 +75,7 @@ export default function About() {
               className="flex-1 w-full p-4 sm:p-5 lg:p-6 bg-white rounded-2xl sm:rounded-3xl shadow-[0px_1px_4px_0px_rgba(12,12,13,0.05)] flex flex-col justify-start items-start gap-3"
             >
               <div className="text-[#FF7171] text-3xl sm:text-4xl lg:text-[64px] font-medium font-['Inter'] leading-tight lg:leading-[64px]">
-                100+
+                30+
               </div>
               <div className="text-black text-sm sm:text-base font-normal font-['Inter'] leading-normal">
                 працюючих спеціалістів
