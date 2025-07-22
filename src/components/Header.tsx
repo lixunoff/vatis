@@ -92,10 +92,12 @@ export default function Header() {
             }`}
           >
             {/* Logo */}
-            <div>
-              <h1 className="text-black text-lg sm:text-xl font-bold font-['Inter'] leading-normal">
-                VATIS
-              </h1>
+            <div className="flex items-center">
+              <img 
+                src="/images/logo.svg" 
+                alt="VATIS Logo" 
+                className="h-6 sm:h-8 w-auto object-contain"
+              />
             </div>
 
             {/* Desktop Navigation */}

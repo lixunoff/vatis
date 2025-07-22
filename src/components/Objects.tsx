@@ -66,7 +66,7 @@ const Objects: React.FC = () => {
   }, [])
 
   // Навигация
-  const totalSlides = 11 // 10 проектов + 1 boiler
+  const totalSlides = 18 // 17 проектов + 1 boiler
   
   const scrollToSlide = (slideIndex: number) => {
     if (scrollRef.current) {
@@ -152,6 +152,48 @@ const Objects: React.FC = () => {
       title: 'Готельно-ресторанний комплекс "Vinograd"',
       description: 'Системи вентиляції СПА зони Готельно-ресторанного комплексу "Vinograd" м. Гайсин.',
       image: '/images/project-10.webp'
+    },
+    {
+      id: 11,
+      title: 'Проект і монтаж систем опалення, ІТП, вентиляції і кондиціювання ТЦ «Світанок»',
+      description: 'Комплексне проектування та монтаж інженерних систем торгового центру, включаючи індивідуальний тепловий пункт, системи опалення, вентиляції та кондиціювання для забезпечення комфортних умов для відвідувачів та персоналу.',
+      image: '/images/project-11.webp'
+    },
+    {
+      id: 12,
+      title: 'КНП «Шаргородська міська лікарня» та інші медичні заклади',
+      description: 'Виконано проектування та монтаж систем вентиляції, опалення для Шаргородської міської лікарні, окремих приміщень Хмільницької міської лікарні, Вінницької обласної дитячої лікарні, Вінницької обласної лікарні ім. М. Пирогова, включаючи вентиляцію «чистих приміщень» та енергоаудити.',
+      image: '/images/project-12.webp'
+    },
+    {
+      id: 13,
+      title: 'Офісна будівля на проспекті Космонавтів, 23',
+      description: 'Системи вентиляції і кондиціювання 2, 6 та 9 поверхів сучасної офісної будівлі в центрі Вінниці для забезпечення комфортного робочого середовища.',
+      image: '/images/project-13.webp'
+    },
+    {
+      id: 14,
+      title: 'Вінницький молочний завод «Рошен»',
+      description: 'Проектування та монтаж систем вентиляції та холодопостачання окремих ділянок виробництва молочної продукції з урахуванням специфічних вимог харчової промисловості.',
+      image: '/images/project-14.webp'
+    },
+    {
+      id: 15,
+      title: 'Медичний центр «Віола Мед»',
+      description: 'Повний цикл робіт з проектування та монтажу систем вентиляції та кондиціювання медичного центру для забезпечення необхідних санітарно-гігієнічних умов.',
+      image: '/images/project-15.webp'
+    },
+    {
+      id: 16,
+      title: 'Дністровська ГЕС',
+      description: 'Проектування та монтаж систем вентиляції та кондиціювання окремих будівель великого енергетичного підприємства з урахуванням специфічних технічних вимог.',
+      image: '/images/project-16.webp'
+    },
+    {
+      id: 17,
+      title: 'ПрАТ «Вінницький олійножировий комбінат»',
+      description: 'Розроблено проектну документацію та здійснено монтаж систем вентиляції окремих цехів харчового виробництва, проведено дослідження ефективності роботи вентиляційного обладнання.',
+      image: '/images/project-17.webp'
     }
   ]
 
@@ -395,7 +437,7 @@ const Objects: React.FC = () => {
 
         {/* Navigation - только на десктопах */}
         <div className="hidden lg:flex justify-center w-full">
-          <div className="bg-white rounded-3xl shadow-[0px_4px_4px_-4px_rgba(12,12,13,0.05),0px_16px_32px_-4px_rgba(12,12,13,0.10)] inline-flex justify-start items-center gap-2">
+          <div className="bg-white rounded-3xl shadow-[0px_4px_4px_-4px_rgba(12,12,13,0.05),0px_16px_32px_-4px_rgba(12,12,13,0.10)] inline-flex justify-start items-center gap-10">
             {/* Left Arrow */}
             <button 
               onClick={prevSlide}
@@ -408,7 +450,7 @@ const Objects: React.FC = () => {
             >
               <div className="w-6 h-6 left-3 top-3 absolute overflow-hidden">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="w-full h-full">
-                  <path d="M15 18L9 12L15 6" stroke={currentSlide === 0 ? "black" : "#183AE4"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M15 18L9 12L15 6" stroke={currentSlide === 0 ? "black" : "black"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
             </button>
