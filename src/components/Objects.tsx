@@ -303,9 +303,9 @@ const Objects: React.FC = () => {
             <div 
               className="flex-shrink-0 flex justify-center items-center" 
               style={{ 
-                width: isMobile ? '75vw' : '400px', 
+                width: isMobile ? '480px' : '600px', 
                 height: isMobile ? '480px' : '600px', 
-                minWidth: isMobile ? '75vw' : '400px' 
+                minWidth: isMobile ? '480px' : '600px' 
               }}
             >
               <motion.div
